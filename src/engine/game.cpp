@@ -1,6 +1,8 @@
 
 #include "game.hpp"
 
+#include <swapShop/GameScreen.hpp>
+
 // set packfile name/filepath if one is being used
 #define PACKFILE_NAME ""
 
@@ -35,6 +37,7 @@ isQuitting(false)
     registerStates();
 
     frameTime = sf::seconds(1.f / 60.f);
+    window.setFramerateLimit(60); // Added based on PuzzleChaser
 }
 
 void Game::run()
@@ -84,10 +87,14 @@ void Game::draw()
 // Resource IDs must be listed in resourceIdentifiers.hpp
 void Game::registerResources()
 {
+    resourceManager.registerTexture(Textures::SpriteSheet, "res/spritesheet.png");
 }
 
 // register states via stateStack
 // State IDs must be listed in stateIdentifiers.hpp
 void Game::registerStates()
 {
+    stateStack.registerState<GameScreen>(States::Game);
+
+    stateStack.pushState(States::Game);
 }

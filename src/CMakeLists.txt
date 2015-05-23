@@ -20,6 +20,8 @@ set(Game_Project_SOURCES
     engine/ec/entity.cpp
     engine/ec/nMove.cpp
     engine/ec/system.cpp
+    swapShop/GameScreen.cpp
+    swapShop/SwapSprite.cpp
     )
 
 if(WIN32)
