@@ -20,8 +20,21 @@ set(Game_Project_SOURCES
     engine/ec/entity.cpp
     engine/ec/nMove.cpp
     engine/ec/system.cpp
+    swapShop/SwapEntity.cpp
     swapShop/GameScreen.cpp
     swapShop/SwapSprite.cpp
+    swapShop/entities/BlockOne.cpp
+    swapShop/entities/BlockOneBreakable.cpp
+    swapShop/entities/BlockZero.cpp
+    swapShop/entities/BlockZeroBreakable.cpp
+    swapShop/entities/BlueBricks.cpp
+    swapShop/entities/Coin.cpp
+    swapShop/entities/GreenBricks.cpp
+    swapShop/entities/Heart.cpp
+    swapShop/entities/Player.cpp
+    swapShop/entities/Potion.cpp
+    swapShop/entities/RedGuy.cpp
+    swapShop/entities/YellowGuy.cpp
     )
 
 if(WIN32)

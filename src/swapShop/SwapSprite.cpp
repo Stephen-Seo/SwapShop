@@ -10,8 +10,8 @@ currentID(0),
 flippedHorizontal(false),
 flippedVertical(false)
 {
-    flipperHorizontal.scale(-1.0f, 1.0f);
-    flipperVertical.scale(1.0f, -1.0f);
+    flipperHorizontal.scale(-1.0f, 1.0f, 16.0f, 16.0f);
+    flipperVertical.scale(1.0f, -1.0f, 16.0f, 16.0f);
 }
 
 SwapSprite::~SwapSprite()

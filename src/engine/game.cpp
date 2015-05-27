@@ -94,7 +94,7 @@ void Game::registerResources()
 // State IDs must be listed in stateIdentifiers.hpp
 void Game::registerStates()
 {
-    stateStack.registerState<GameScreen>(States::Game);
+    stateStack.registerState<GameScreen>(States::Game, context);
 
     stateStack.pushState(States::Game);
 }

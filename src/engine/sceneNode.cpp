@@ -45,34 +45,34 @@ void SceneNode::drawChildren(sf::RenderTarget& target,
         [&target, &states] (const SceneNode::Ptr& child) { child->draw(target, states); });
 }
 
-void SceneNode::update(sf::Time dt)
+void SceneNode::update(sf::Time dt, Context context)
 {
-    updateCurrent(dt);
-    updateChildren(dt);
+    updateCurrent(dt, context);
+    updateChildren(dt, context);
 }
 
-void SceneNode::updateCurrent(sf::Time)
+void SceneNode::updateCurrent(sf::Time, Context context)
 {}
 
-void SceneNode::updateChildren(sf::Time dt)
+void SceneNode::updateChildren(sf::Time dt, Context context)
 {
     std::for_each(children.begin(), children.end(),
-        [&dt] (SceneNode::Ptr& child) { child->update(dt); });
+        [&dt, context] (SceneNode::Ptr& child) { child->update(dt, context); });
 }
 
-void SceneNode::handleEvent(const sf::Event& event)
+void SceneNode::handleEvent(const sf::Event& event, Context context)
 {
-    handleEventCurrent(event);
-    passEvent(event);
+    handleEventCurrent(event, context);
+    passEvent(event, context);
 }
 
-void SceneNode::handleEventCurrent(const sf::Event& event)
+void SceneNode::handleEventCurrent(const sf::Event& event, Context context)
 {}
 
-void SceneNode::passEvent(const sf::Event& event)
+void SceneNode::passEvent(const sf::Event& event, Context context)
 {
     std::for_each(children.begin(), children.end(),
-        [&event] (const SceneNode::Ptr& child) { child->handleEvent(event); });
+        [&event, context] (const SceneNode::Ptr& child) { child->handleEvent(event, context); });
 }
 
 sf::Transform SceneNode::getWorldTransform() const

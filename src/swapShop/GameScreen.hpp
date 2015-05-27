@@ -3,11 +3,14 @@
 #define GAME_SCREEN_HPP
 
 #include <engine/state.hpp>
+#include <engine/sceneNode.hpp>
+
+#include <swapShop/SwapEntity.hpp>
 
 class GameScreen : public State
 {
 public:
-    GameScreen(StateStack& stack);
+    GameScreen(StateStack& stack, Context context);
     ~GameScreen();
 
     virtual void draw(Context context);
@@ -15,6 +18,9 @@ public:
     virtual bool handleEvent(const sf::Event& event, Context context);
 
 private:
+    SceneNode living;
+    SceneNode pickups;
+    SceneNode world;
 
 };
 

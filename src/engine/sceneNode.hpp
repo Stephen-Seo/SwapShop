@@ -10,6 +10,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+#include <engine/context.hpp>
+
 class SceneNode : public sf::Transformable, public sf::Drawable,
                   private sf::NonCopyable
 {
@@ -21,8 +23,8 @@ public:
     void attachChild(Ptr child);
     Ptr detachChild(const SceneNode& node);
 
-    void update(sf::Time dt);
-    void handleEvent(const sf::Event& event);
+    void update(sf::Time dt, Context context);
+    void handleEvent(const sf::Event& event, Context context);
 
     sf::Transform getWorldTransform() const;
     sf::Vector2f getWorldPosition() const;
@@ -34,11 +36,11 @@ private:
     void drawChildren(sf::RenderTarget& target,
                       sf::RenderStates states) const;
 
-    virtual void updateCurrent(sf::Time dt);
-    void updateChildren(sf::Time dt);
+    virtual void updateCurrent(sf::Time dt, Context context);
+    void updateChildren(sf::Time dt, Context context);
 
-    virtual void handleEventCurrent(const sf::Event& event);
-    void passEvent(const sf::Event& event);
+    virtual void handleEventCurrent(const sf::Event& event, Context context);
+    void passEvent(const sf::Event& event, Context context);
 
     std::vector<Ptr>    children;
     SceneNode*          parent;
