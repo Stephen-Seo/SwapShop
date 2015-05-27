@@ -1,6 +1,10 @@
 
 #include <swapShop/entities/Player.hpp>
 
+#include <cmath>
+
+#define MOVEMENT_SPEED 100.0f
+
 Player::Player(const sf::Texture& texture) :
 SwapEntity(texture),
 direction(DOWN),
@@ -24,6 +28,7 @@ stationary(true)
 
 void Player::updateCurrent(sf::Time dt, Context context)
 {
+    // display management
     currentTime += dt.asSeconds();
 
     if(currentTime >= TIME_PER_FRAME)
@@ -74,6 +79,39 @@ void Player::updateCurrent(sf::Time dt, Context context)
         }
     }
 
+    // move
+    if(!stationary)
+    {
+        sf::Vector2f movement;
+        // moving up
+        if((0x1 & dirByte) != 0)
+        {
+            movement.y = -1.0f;
+        }
+        // moving down
+        else if((0x2 & dirByte) != 0)
+        {
+            movement.y = 1.0f;
+        }
+        // moving left
+        if((0x4 & dirByte) != 0)
+        {
+            movement.x = -1.0f;
+        }
+        // moving right
+        if((0x8 & dirByte) != 0)
+        {
+            movement.x = 1.0f;
+        }
+
+        movement /= std::sqrt(movement.x * movement.x + movement.y * movement.y);
+
+        movement *= MOVEMENT_SPEED * dt.asSeconds();
+
+        move(movement);
+    }
+
+    // update sprite
     sprite.update(dt);
 }
 
@@ -103,8 +141,7 @@ void Player::handleEventCurrent(const sf::Event& event, Context context)
             dirByte |= 0x8;
         }
     }
-
-    if(event.type == sf::Event::KeyReleased)
+    else if(event.type == sf::Event::KeyReleased)
     {
         if(event.key.code == sf::Keyboard::W)
         {
@@ -122,6 +159,43 @@ void Player::handleEventCurrent(const sf::Event& event, Context context)
         else if(event.key.code == sf::Keyboard::D)
         {
             dirByte &= 0x7;
+        }
+    }
+    else if(event.type == sf::Event::JoystickMoved)
+    {
+        if(event.joystickMove.axis == sf::Joystick::PovX)
+        {
+            if(event.joystickMove.position == 100.0f)
+            {
+                direction = RIGHT;
+                dirByte |= 0x8;
+            }
+            else if(event.joystickMove.position == -100.0f)
+            {
+                direction = LEFT;
+                dirByte |= 0x4;
+            }
+            else
+            {
+                dirByte &= 0x3;
+            }
+        }
+        else if(event.joystickMove.axis == sf::Joystick::PovY)
+        {
+            if(event.joystickMove.position == 100.0f)
+            {
+                direction = DOWN;
+                dirByte |= 0x2;
+            }
+            else if(event.joystickMove.position == -100.0f)
+            {
+                direction = UP;
+                dirByte |= 0x1;
+            }
+            else
+            {
+                dirByte &= 0xC;
+            }
         }
     }
 

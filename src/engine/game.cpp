@@ -88,6 +88,8 @@ void Game::draw()
 void Game::registerResources()
 {
     resourceManager.registerTexture(Textures::SpriteSheet, "res/spritesheet.png");
+
+    resourceManager.registerFont(Fonts::ClearSans, "res/ClearSans-Regular.ttf");
 }
 
 // register states via stateStack

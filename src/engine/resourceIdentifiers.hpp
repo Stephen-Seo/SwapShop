@@ -24,6 +24,7 @@ namespace Fonts
 {
     enum ID
     {
+        ClearSans
     };
 }
 

@@ -22,6 +22,14 @@ private:
     SceneNode pickups;
     SceneNode world;
 
+#ifndef NDEBUG
+    sf::Text cinputDisplay;
+    sf::Text cinputDisplay2;
+    sf::Text cinputDisplay3;
+
+    void displayControllerInput(const sf::Event& event);
+#endif
+
 };
 
 #endif
