@@ -116,11 +116,11 @@ void GameScreen::collideWorld()
 
         if(typeid(current) == typeid(Player))
         {
-#ifndef NDEBUG
-            std::cout << current.getWorldPosition().x << ' ' << current.getWorldPosition().y << '\n';
-#endif
-
             this->colliding = !colliding.empty();
+        }
+        for(auto node = colliding.begin(); node != colliding.end(); ++node)
+        {
+            SwapUtility::pushUntilNotColliding(current, **node);
         }
     });
 }
