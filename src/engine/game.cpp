@@ -30,8 +30,9 @@ resourceManager(&stateStack, RESOURCE_MANAGER_MODE, PACKFILE_NAME),
 mPlayer(),
 sPlayer(),
 stateStack(),
-context(window, resourceManager, mPlayer, sPlayer, ecEngine, isQuitting),
-isQuitting(false)
+context(window, resourceManager, mPlayer, sPlayer, ecEngine, isQuitting, clearColor),
+isQuitting(false),
+clearColor()
 {
     registerResources();
     registerStates();
@@ -78,7 +79,7 @@ void Game::update(sf::Time deltaTime)
 
 void Game::draw()
 {
-    window.clear();
+    window.clear(clearColor);
     stateStack.draw(context);
     window.display();
 }

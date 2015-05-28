@@ -204,6 +204,5 @@ void Player::handleEventCurrent(const sf::Event& event, Context context)
 
 void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    states.transform *= getTransform();
     target.draw(sprite, states);
 }

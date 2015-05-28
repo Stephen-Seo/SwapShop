@@ -22,6 +22,11 @@ private:
     SceneNode pickups;
     SceneNode world;
 
+    sf::RectangleShape indicator;
+    bool colliding;
+
+    void collideWorld();
+
 #ifndef NDEBUG
     sf::Text cinputDisplay;
     sf::Text cinputDisplay2;

@@ -6,19 +6,38 @@
 #include <engine/resourceManager.hpp>
 
 #include <swapShop/entities/Player.hpp>
+#include <swapShop/entities/BlueBricks.hpp>
 #include <swapShop/JoystickIdentifiers.hpp>
+#include <swapShop/SwapUtility.hpp>
 
 #include <string>
+
+#ifndef NDEBUG
+  #include <iostream>
+#endif
 
 GameScreen::GameScreen(StateStack& stack, Context context) :
 State(stack, context)
 {
+    *(context.clearColor) = sf::Color(150,150,150);
+
     tset.insert(Textures::SpriteSheet);
     fset.insert(Fonts::ClearSans);
 
     context.resourceManager->loadResources(getNeededResources());
 
+    // init entities
     living.attachChild(SceneNode::Ptr(new Player(context.resourceManager->getTexture(Textures::SpriteSheet))));
+
+    {
+        SceneNode::Ptr worldObject(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(180.0f, 120.0f);//240.0f);
+        world.attachChild(std::move(worldObject));
+    }
+
+    indicator.setSize(sf::Vector2f(720.0f, 480.0f));
+    indicator.setFillColor(sf::Color::Green);
+    colliding = false;
 
 #ifndef NDEBUG
     cinputDisplay.setFont(context.resourceManager->getFont(Fonts::ClearSans));
@@ -44,6 +63,11 @@ GameScreen::~GameScreen()
 
 void GameScreen::draw(Context context)
 {
+    if(colliding)
+    {
+        context.window->draw(indicator);
+    }
+
     context.window->draw(living);
     context.window->draw(pickups);
     context.window->draw(world);
@@ -61,6 +85,8 @@ bool GameScreen::update(sf::Time dt, Context context)
     pickups.update(dt, context);
     world.update(dt, context);
 
+    collideWorld();
+
     return false;
 }
 
@@ -75,6 +101,28 @@ bool GameScreen::handleEvent(const sf::Event& event, Context context)
 #endif
 
     return false;
+}
+
+void GameScreen::collideWorld()
+{
+    living.forEach([this] (SceneNode& current) {
+        std::vector<SceneNode*> colliding;
+        this->world.forEach([&current, &colliding] (SceneNode& worldCurrent) {
+            if(SwapUtility::isEntitiesColliding(current, worldCurrent))
+            {
+                colliding.push_back(&worldCurrent);
+            }
+        });
+
+        if(typeid(current) == typeid(Player))
+        {
+#ifndef NDEBUG
+            std::cout << current.getWorldPosition().x << ' ' << current.getWorldPosition().y << '\n';
+#endif
+
+            this->colliding = !colliding.empty();
+        }
+    });
 }
 
 #ifndef NDEBUG

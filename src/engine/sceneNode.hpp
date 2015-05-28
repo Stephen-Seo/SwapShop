@@ -5,6 +5,7 @@
 #include <memory>
 #include <algorithm>
 #include <cassert>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -28,6 +29,8 @@ public:
 
     sf::Transform getWorldTransform() const;
     sf::Vector2f getWorldPosition() const;
+
+    void forEach(std::function<void(SceneNode&)> function, bool includeThis = false);
 private:
     virtual void draw(sf::RenderTarget& target,
                       sf::RenderStates states) const;

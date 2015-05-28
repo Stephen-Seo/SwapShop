@@ -19,7 +19,8 @@ struct Context
             MusicPlayer& mPlayer,
             SoundPlayer& sPlayer,
             Engine& ecEngine,
-            bool& isQuitting);
+            bool& isQuitting,
+            sf::Color& clearColor);
 
     sf::RenderWindow* window;
     ResourceManager* resourceManager;
@@ -27,6 +28,7 @@ struct Context
     SoundPlayer* sPlayer;
     Engine* ecEngine;
     bool* isQuitting;
+    sf::Color* clearColor;
 };
 
 #endif

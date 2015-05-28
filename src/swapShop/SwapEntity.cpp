@@ -7,7 +7,6 @@ hp(1),
 maxHP(1)
 {
     sprite.setSpriteSize(16, 16);
-    sprite.setScale(2.0f, 2.0f);
 }
 
 void SwapEntity::setHP(unsigned int hp)

@@ -23,6 +23,7 @@ set(Game_Project_SOURCES
     swapShop/SwapEntity.cpp
     swapShop/GameScreen.cpp
     swapShop/SwapSprite.cpp
+    swapShop/SwapUtility.cpp
     swapShop/entities/BlockOne.cpp
     swapShop/entities/BlockOneBreakable.cpp
     swapShop/entities/BlockZero.cpp

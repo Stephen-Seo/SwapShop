@@ -43,6 +43,8 @@ private:
     bool isQuitting;
 
     Engine ecEngine;
+
+    sf::Color clearColor;
 };
 
 #endif

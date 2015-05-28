@@ -10,8 +10,8 @@ currentID(0),
 flippedHorizontal(false),
 flippedVertical(false)
 {
-    flipperHorizontal.scale(-1.0f, 1.0f, 16.0f, 16.0f);
-    flipperVertical.scale(1.0f, -1.0f, 16.0f, 16.0f);
+    flipperHorizontal.scale(-1.0f, 1.0f, 8.0f, 8.0f);
+    flipperVertical.scale(1.0f, -1.0f, 8.0f, 8.0f);
 }
 
 SwapSprite::~SwapSprite()
@@ -69,7 +69,7 @@ void SwapSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
         states.transform *= flipperVertical;
     }
 
-    states.transform *= getTransform(); // TODO verify somehow that this ordering is correct
+    states.transform *= getTransform();
 
     target.draw(sprite, states);
 }
