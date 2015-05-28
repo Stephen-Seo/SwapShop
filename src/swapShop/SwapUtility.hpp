@@ -12,6 +12,7 @@ namespace SwapUtility
     bool isEntitiesColliding(const SceneNode& one, const SceneNode& two);
     void pushUntilNotColliding(SceneNode& movable, const SceneNode& obstacle);
     void normalize(sf::Vector2f& vector);
+    float magnitude(const sf::Vector2f& vector);
 }
 
 #endif

@@ -1,6 +1,8 @@
 
 #include <swapShop/SwapUtility.hpp>
 
+#include <cmath>
+
 bool SwapUtility::isEntitiesColliding(const SceneNode& one, const SceneNode& two)
 {
     sf::Vector2f onePos = one.getWorldPosition();
@@ -25,8 +27,29 @@ void SwapUtility::pushUntilNotColliding(SceneNode& movable, const SceneNode& obs
     // get diff vector
     sf::Vector2f diff = mVec - oVec;
 
+    // get current magnitude of diff
+    float magnitude = SwapUtility::magnitude(diff);
+
     // normalize
     SwapUtility::normalize(diff);
+
+    // move to at least distance of ENTITY_SIZE_F
+    if(SwapUtility::isEntitiesColliding(movable, obstacle))
+    {
+        if(magnitude < ENTITY_SIZE_F)
+        {
+            diff *= ENTITY_SIZE_F - magnitude;
+            movable.move(diff);
+
+            // normalize again
+            SwapUtility::normalize(diff);
+        }
+    }
+    else
+    {
+        return;
+    }
+
 
     // move until not colliding
     while(SwapUtility::isEntitiesColliding(movable, obstacle))
@@ -40,5 +63,10 @@ void SwapUtility::pushUntilNotColliding(SceneNode& movable, const SceneNode& obs
 void SwapUtility::normalize(sf::Vector2f& vector)
 {
     vector /= std::sqrt(vector.x * vector.x + vector.y * vector.y);
+}
+
+float SwapUtility::magnitude(const sf::Vector2f& vector)
+{
+    return std::sqrt(vector.x * vector.x + vector.y * vector.y);
 }
 
