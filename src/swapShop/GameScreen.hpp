@@ -25,6 +25,7 @@ private:
     sf::RectangleShape indicator;
     bool colliding;
 
+    void generateWorld(Context context);
     void collideWorld();
 
 #ifndef NDEBUG

@@ -8,6 +8,7 @@
 #include <swapShop/entities/Player.hpp>
 #include <swapShop/entities/BlueBricks.hpp>
 #include <swapShop/JoystickIdentifiers.hpp>
+#include <swapShop/ProceduralGeneration.hpp>
 #include <swapShop/SwapUtility.hpp>
 
 #include <string>
@@ -27,17 +28,16 @@ State(stack, context)
     context.resourceManager->loadResources(getNeededResources());
 
     // init entities
-    living.attachChild(SceneNode::Ptr(new Player(context.resourceManager->getTexture(Textures::SpriteSheet))));
+    SceneNode::Ptr player(new Player(context.resourceManager->getTexture(Textures::SpriteSheet)));
+    player->setPosition(32.0f, 32.0f);
+    living.attachChild(std::move(player));
 
-    {
-        SceneNode::Ptr worldObject(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
-        worldObject->setPosition(180.0f, 120.0f);//240.0f);
-        world.attachChild(std::move(worldObject));
-    }
+    generateWorld(context);
 
     indicator.setSize(sf::Vector2f(720.0f, 480.0f));
     indicator.setFillColor(sf::Color::Green);
     colliding = false;
+
 
 #ifndef NDEBUG
     cinputDisplay.setFont(context.resourceManager->getFont(Fonts::ClearSans));
@@ -101,6 +101,84 @@ bool GameScreen::handleEvent(const sf::Event& event, Context context)
 #endif
 
     return false;
+}
+
+void GameScreen::generateWorld(Context context)
+{
+    std::unordered_set<Coordinate<int> > coords = ProceduralGeneration::drunkardWalk(20, 13, 0.7f, false);
+
+    for(int x = 0; x < 20; ++x)
+    {
+        for(int y = 0; y < 13; ++y)
+        {
+            if(coords.find(Coordinate<int>(x, y)) == coords.end())
+            {
+                // top left
+                SceneNode::Ptr worldObject = SwapUtility::getRandomBrick(context);
+                worldObject->setPosition(32 + x * 32, 32 + y * 32);
+                world.attachChild(std::move(worldObject));
+
+                // top right
+                worldObject = SwapUtility::getRandomBrick(context);
+                worldObject->setPosition(48 + x * 32, 32 + y * 32);
+                world.attachChild(std::move(worldObject));
+
+                // bottom left
+                worldObject = SwapUtility::getRandomBrick(context);
+                worldObject->setPosition(32 + x * 32, 48 + y * 32);
+                world.attachChild(std::move(worldObject));
+
+                // bottom right
+                worldObject = SwapUtility::getRandomBrick(context);
+                worldObject->setPosition(48 + x * 32, 48 + y * 32);
+                world.attachChild(std::move(worldObject));
+            }
+        }
+    }
+
+    // top and bottom edges
+    for(int x = 0; x < 45; ++x)
+    {
+        SceneNode::Ptr worldObject(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(x * 16, 0);
+        world.attachChild(std::move(worldObject));
+
+        worldObject = SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(x * 16, 16);
+        world.attachChild(std::move(worldObject));
+
+        worldObject = SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(x * 16, 464);
+        world.attachChild(std::move(worldObject));
+
+        worldObject = SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(x * 16, 448);
+        world.attachChild(std::move(worldObject));
+    }
+
+    // left and right edges
+    for(int y = 1; y < 29; ++y)
+    {
+        SceneNode::Ptr worldObject(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(0, y * 16);
+        world.attachChild(std::move(worldObject));
+
+        worldObject = SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(16, y * 16);
+        world.attachChild(std::move(worldObject));
+
+        worldObject = SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(672, y * 16);
+        world.attachChild(std::move(worldObject));
+
+        worldObject = SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(688, y * 16);
+        world.attachChild(std::move(worldObject));
+
+        worldObject = SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+        worldObject->setPosition(704, y * 16);
+        world.attachChild(std::move(worldObject));
+    }
 }
 
 void GameScreen::collideWorld()

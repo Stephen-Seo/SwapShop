@@ -2,6 +2,12 @@
 #include <swapShop/SwapUtility.hpp>
 
 #include <cmath>
+#include <random>
+
+#include <engine/resourceManager.hpp>
+
+#include <swapShop/entities/BlueBricks.hpp>
+#include <swapShop/entities/GreenBricks.hpp>
 
 bool SwapUtility::isEntitiesColliding(const SceneNode& one, const SceneNode& two)
 {
@@ -68,5 +74,27 @@ void SwapUtility::normalize(sf::Vector2f& vector)
 float SwapUtility::magnitude(const sf::Vector2f& vector)
 {
     return std::sqrt(vector.x * vector.x + vector.y * vector.y);
+}
+
+SceneNode::Ptr SwapUtility::getRandomBrick(Context context)
+{
+    std::random_device rd;
+    return SwapUtility::getRandomBrick(context, rd());
+}
+
+SceneNode::Ptr SwapUtility::getRandomBrick(Context context, unsigned int seed)
+{
+    std::mt19937 gen(seed);
+    std::uniform_int_distribution<> dis(0,1);
+
+    switch(dis(gen))
+    {
+    case 0:
+        return SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+    case 1:
+        return SceneNode::Ptr(new GreenBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+    default:
+        return SceneNode::Ptr(new BlueBricks(context.resourceManager->getTexture(Textures::SpriteSheet)));
+    }
 }
 
