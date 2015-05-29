@@ -20,8 +20,9 @@ set(Game_Project_SOURCES
     engine/ec/entity.cpp
     engine/ec/nMove.cpp
     engine/ec/system.cpp
-    swapShop/SwapEntity.cpp
     swapShop/GameScreen.cpp
+    swapShop/ProceduralGeneration.cpp
+    swapShop/SwapEntity.cpp
     swapShop/SwapSprite.cpp
     swapShop/SwapUtility.cpp
     swapShop/entities/BlockOne.cpp
