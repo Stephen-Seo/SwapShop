@@ -32,6 +32,8 @@ BATTLE!:
     final_damage = damage - damage / (2 / (successes / 4))
     (note divide by zero with integers throws an exception so there
     should be a check to simply return damage if successes == 0)
+    (note this will probably be done with floating point numbers but
+    a check for divide by zero will probably still happen)
     If the 4 button sequence has been pressed successfully, the player
     has a chance to complete a 7 button sequence in 1.5 seconds.
     If successful, negates damage by 3/4 and makes the next attack
