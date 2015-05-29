@@ -8,8 +8,8 @@
 
 namespace ProceduralGeneration
 {
-    std::unordered_set<Coordinate<int> > drunkardWalk(int maxX, int maxY, bool randomStart = true, int startX = 0, int startY = 0);
-    std::unordered_set<Coordinate<int> > drunkardWalk(int maxX, int maxY, unsigned int seed, bool randomStart = true, int startX = 0, int startY = 0);
+    std::unordered_set<Coordinate<int> > drunkardWalk(int maxX, int maxY, float percentage = 0.7f, bool randomStart = true, int startX = 0, int startY = 0);
+    std::unordered_set<Coordinate<int> > drunkardWalk(int maxX, int maxY, unsigned int seed, float percentage = 0.7f, bool randomStart = true, int startX = 0, int startY = 0);
 }
 
 #endif
