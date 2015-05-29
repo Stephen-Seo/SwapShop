@@ -1,0 +1,51 @@
+
+Battle:
+    - Minigame where button sequences must be pressed in order to deal
+    damage?
+    - Generic RPG battle?
+    - Rock/Paper/Scissors style combat?
+    - Perhaps a RPG style battle where standard attacks do tiny amounts
+    of damage unless a successful block renders the enemy open to attack.
+    It would be turn based, so a block/attack would take a turn. Attack
+    does 1x damage, attack while enemy is open is 3x.
+    - Perhaps taking some inspiration from Warioware games, battle
+    works by having timed events that require a button press/mash
+    at specific times. A successful press/mash would attack or block or
+    some random battle specific event.
+
+BATTLE!:
+    - Battle occurs in phases:
+        - Player attack phase
+        - Player defend phase
+        - Player recovery phase
+    - Player starts at level 1, and can go up to 100.
+    - Level up required exp is equation ceil(current_level + 4 * 1.7) ?
+    May tweak later...
+    - In attack phase, if the player's level = X, then there are X
+    possible sequences that the player may be prompted to input.
+    The number of successfully input sequences indicates attack level.
+    All sequences must be input within (ln(1.5 + X) * 2.5) seconds.
+    Every sequence randomly has 3 or 4 buttons to press.
+    - In defend phase, A 4 button sequence must be pressed within 1.2
+    seconds in order to halve damage done. Note that partially finishing
+    the sequence counts.
+    final_damage = damage - damage / (2 / (successes / 4))
+    (note divide by zero with integers throws an exception so there
+    should be a check to simply return damage if successes == 0)
+    If the 4 button sequence has been pressed successfully, the player
+    has a chance to complete a 7 button sequence in 1.5 seconds.
+    If successful, negates damage by 3/4 and makes the next attack
+    a critical hit (2x multiplier), but skips the recovery phase.
+    The player can actually die if the 3/4 damage does lethal damage
+    and will not be able to progress because the recovery phase was
+    skipped.
+    No change if fail.
+    - Recovery phase is skipped unless the player has received a lethal
+    blow. This is a chance to recover but can only be done 3 times total.
+    If the player receives a lethal blow and progresses to the recovery
+    phase for the fourth time in a battle, the player cannot recover.
+    The player must input a sequence of 6 buttons within 1.5 seconds.
+    A successfully pressed sequence will recover the player to half of
+    their maxHP.
+    - When battle ends, if the player succeeds, hp will reset to max hp.
+    if the player loses, it's game over maannnnn.
