@@ -14,6 +14,7 @@
 #include "soundPlayer.hpp"
 #include "state.hpp"
 #include "stateStack.hpp"
+#include <swapShop/SwapContext.hpp>
 
 class Game
 {
@@ -45,6 +46,8 @@ private:
     Engine ecEngine;
 
     sf::Color clearColor;
+
+    SwapContext swapContext;
 };
 
 #endif

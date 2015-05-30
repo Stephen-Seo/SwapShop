@@ -4,6 +4,8 @@
 
 #define TIME_PER_FRAME 0.3f
 
+#define PLAYER_MOVEMENT_SPEED 100.0f
+
 #include <swapShop/SwapEntity.hpp>
 
 class Player: public SwapEntity

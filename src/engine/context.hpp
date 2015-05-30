@@ -10,7 +10,7 @@ class ResourceManager;
 class MusicPlayer;
 class SoundPlayer;
 class Engine;
-
+class SwapContext;
 
 struct Context
 {
@@ -20,7 +20,8 @@ struct Context
             SoundPlayer& sPlayer,
             Engine& ecEngine,
             bool& isQuitting,
-            sf::Color& clearColor);
+            sf::Color& clearColor,
+            SwapContext& swapContext);
 
     sf::RenderWindow* window;
     ResourceManager* resourceManager;
@@ -29,6 +30,7 @@ struct Context
     Engine* ecEngine;
     bool* isQuitting;
     sf::Color* clearColor;
+    SwapContext* swapContext;
 };
 
 #endif

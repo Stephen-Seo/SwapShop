@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cassert>
 #include <functional>
+#include <set>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -20,6 +21,7 @@ public:
     typedef std::unique_ptr<SceneNode> Ptr;
 
     SceneNode();
+    ~SceneNode();
 
     void attachChild(Ptr child);
     Ptr detachChild(const SceneNode& node);
@@ -31,6 +33,8 @@ public:
     sf::Vector2f getWorldPosition() const;
 
     void forEach(std::function<void(SceneNode&)> function, bool includeThis = false);
+
+    bool operator ==(const SceneNode& other) const;
 private:
     virtual void draw(sf::RenderTarget& target,
                       sf::RenderStates states) const;
@@ -47,6 +51,10 @@ private:
 
     std::vector<Ptr>    children;
     SceneNode*          parent;
+    static int IDcounter;
+    static std::set<int> usedIDs;
+    int id;
+
 };
 
 #endif

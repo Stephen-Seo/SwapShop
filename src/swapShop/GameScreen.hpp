@@ -22,10 +22,10 @@ private:
     SceneNode pickups;
     SceneNode world;
 
-    sf::RectangleShape indicator;
-    bool colliding;
+    SceneNode* collidingEnemy;
 
     void generateWorld(Context context);
+    void collideLiving();
     void collideWorld();
 
 #ifndef NDEBUG

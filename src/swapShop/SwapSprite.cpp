@@ -69,7 +69,5 @@ void SwapSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
         states.transform *= flipperVertical;
     }
 
-    states.transform *= getTransform();
-
     target.draw(sprite, states);
 }

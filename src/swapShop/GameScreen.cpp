@@ -7,9 +7,11 @@
 
 #include <swapShop/entities/Player.hpp>
 #include <swapShop/entities/BlueBricks.hpp>
+#include <swapShop/entities/YellowGuy.hpp>
 #include <swapShop/JoystickIdentifiers.hpp>
 #include <swapShop/ProceduralGeneration.hpp>
 #include <swapShop/SwapUtility.hpp>
+#include <swapShop/SwapContext.hpp>
 
 #include <string>
 
@@ -18,7 +20,8 @@
 #endif
 
 GameScreen::GameScreen(StateStack& stack, Context context) :
-State(stack, context)
+State(stack, context),
+collidingEnemy(nullptr)
 {
     *(context.clearColor) = sf::Color(150,150,150);
 
@@ -29,14 +32,11 @@ State(stack, context)
 
     // init entities
     SceneNode::Ptr player(new Player(context.resourceManager->getTexture(Textures::SpriteSheet)));
+    context.swapContext->player = player.get();
     player->setPosition(32.0f, 32.0f);
     living.attachChild(std::move(player));
 
     generateWorld(context);
-
-    indicator.setSize(sf::Vector2f(720.0f, 480.0f));
-    indicator.setFillColor(sf::Color::Green);
-    colliding = false;
 
 
 #ifndef NDEBUG
@@ -63,11 +63,6 @@ GameScreen::~GameScreen()
 
 void GameScreen::draw(Context context)
 {
-    if(colliding)
-    {
-        context.window->draw(indicator);
-    }
-
     context.window->draw(living);
     context.window->draw(pickups);
     context.window->draw(world);
@@ -179,6 +174,45 @@ void GameScreen::generateWorld(Context context)
         worldObject->setPosition(704, y * 16);
         world.attachChild(std::move(worldObject));
     }
+
+    // add enemies
+    int enemies = 4;
+    while(enemies > 0)
+    {
+        for(auto coord = coords.begin(); coord != coords.end(); ++coord)
+        {
+            if(enemies <= 0)
+            {
+                break;
+            }
+            if(coord->x > 1 && coord->y > 1)
+            {
+                SceneNode::Ptr enemy(new YellowGuy(context.resourceManager->getTexture(Textures::SpriteSheet)));
+                enemy->setPosition(32 + coord->x * 32, 32 + coord->y * 32);
+                living.attachChild(std::move(enemy));
+                --enemies;
+            }
+        }
+    }
+}
+
+void GameScreen::collideLiving()
+{
+    living.forEach([this] (SceneNode& current) {
+        if(typeid(current) == typeid(Player))
+        {
+            this->living.forEach([this, &current] (SceneNode& other) {
+                if(current == other)
+                {
+                    return;
+                }
+                else if(SwapUtility::isEntitiesColliding(current, other))
+                {
+                    collidingEnemy = &other;
+                }
+            });
+        }
+    });
 }
 
 void GameScreen::collideWorld()
@@ -192,10 +226,6 @@ void GameScreen::collideWorld()
             }
         });
 
-        if(typeid(current) == typeid(Player))
-        {
-            this->colliding = !colliding.empty();
-        }
         for(auto node = colliding.begin(); node != colliding.end(); ++node)
         {
             SwapUtility::pushUntilNotColliding(current, **node);

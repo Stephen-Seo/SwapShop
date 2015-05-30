@@ -22,6 +22,7 @@ set(Game_Project_SOURCES
     engine/ec/system.cpp
     swapShop/GameScreen.cpp
     swapShop/ProceduralGeneration.cpp
+    swapShop/SwapContext.cpp
     swapShop/SwapEntity.cpp
     swapShop/SwapSprite.cpp
     swapShop/SwapUtility.cpp

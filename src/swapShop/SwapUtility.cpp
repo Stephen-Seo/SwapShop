@@ -98,3 +98,33 @@ SceneNode::Ptr SwapUtility::getRandomBrick(Context context, unsigned int seed)
     }
 }
 
+// 0 - up
+// 1 - down
+// 2 - left
+// 3 - right
+unsigned char SwapUtility::getDirection(const sf::Vector2f& vector)
+{
+    if(std::abs(vector.x) >= std::abs(vector.y))
+    {
+        if(vector.x >= 0)
+        {
+            return 3;
+        }
+        else
+        {
+            return 2;
+        }
+    }
+    else
+    {
+        if(vector.y >= 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
+

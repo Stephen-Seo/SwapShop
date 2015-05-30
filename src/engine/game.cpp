@@ -30,7 +30,7 @@ resourceManager(&stateStack, RESOURCE_MANAGER_MODE, PACKFILE_NAME),
 mPlayer(),
 sPlayer(),
 stateStack(),
-context(window, resourceManager, mPlayer, sPlayer, ecEngine, isQuitting, clearColor),
+context(window, resourceManager, mPlayer, sPlayer, ecEngine, isQuitting, clearColor, swapContext),
 isQuitting(false),
 clearColor()
 {

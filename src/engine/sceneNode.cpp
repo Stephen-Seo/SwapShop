@@ -1,9 +1,24 @@
 
 #include "sceneNode.hpp"
 
+int SceneNode::IDcounter = 0;
+std::set<int> SceneNode::usedIDs;
+
 SceneNode::SceneNode()
 {
+    while(SceneNode::usedIDs.find(IDcounter) != SceneNode::usedIDs.end())
+    {
+        ++IDcounter;
+    }
+    id = IDcounter;
+    SceneNode::usedIDs.insert(id);
+
     parent = nullptr;
+}
+
+SceneNode::~SceneNode()
+{
+    SceneNode::usedIDs.erase(id);
 }
 
 void SceneNode::attachChild(SceneNode::Ptr child)
@@ -100,5 +115,10 @@ void SceneNode::forEach(std::function<void(SceneNode&)> function, bool includeTh
     {
         (*node)->forEach(function, true);
     }
+}
+
+bool SceneNode::operator ==(const SceneNode& other) const
+{
+    return id == other.id;
 }
 

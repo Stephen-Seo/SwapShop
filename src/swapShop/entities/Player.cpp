@@ -3,8 +3,6 @@
 
 #include <cmath>
 
-#define MOVEMENT_SPEED 100.0f
-
 Player::Player(const sf::Texture& texture) :
 SwapEntity(texture),
 direction(DOWN),
@@ -106,7 +104,7 @@ void Player::updateCurrent(sf::Time dt, Context context)
 
         movement /= std::sqrt(movement.x * movement.x + movement.y * movement.y);
 
-        movement *= MOVEMENT_SPEED * dt.asSeconds();
+        movement *= PLAYER_MOVEMENT_SPEED * dt.asSeconds();
 
         move(movement);
     }
