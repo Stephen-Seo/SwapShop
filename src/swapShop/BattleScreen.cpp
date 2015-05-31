@@ -23,7 +23,8 @@ isPhaseTimeCached(false),
 dis(0,5),
 sequenceIndex(0),
 attackSuccess(0),
-attackIndex(0)
+attackIndex(0),
+attackEnded(false)
 {
     if(context.swapContext->player != nullptr && context.swapContext->enemy != nullptr)
     {
@@ -221,14 +222,21 @@ bool BattleScreen::handleEvent(const sf::Event& event, Context context)
             }
         }
 
-        if(phase == ATTACK && sequenceIndex >= sequence.size() && context.swapContext->playerLevel > attackIndex)
+        if(phase == ATTACK && !attackEnded && sequenceIndex >= sequence.size())
         {
             if(isSequenceSuccess())
             {
                 ++attackSuccess;
             }
-            randomizeSequence(ATTACK);
-            ++attackIndex;
+            if(context.swapContext->playerLevel - 1 > attackIndex)
+            {
+                randomizeSequence(ATTACK);
+                ++attackIndex;
+            }
+            else
+            {
+                attackEnded = true;
+            }
         }
         break;
     default:
@@ -297,6 +305,7 @@ void BattleScreen::battleLogic(sf::Time dt, Context context)
             randomizeSequence(ATTACK);
             attackSuccess = 0;
             attackIndex = 0;
+            attackEnded = false;
             break;
         case ATTACK:
             // goes to PreDefend

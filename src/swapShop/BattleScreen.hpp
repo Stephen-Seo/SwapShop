@@ -97,6 +97,7 @@ private:
 
     int attackSuccess;
     int attackIndex;
+    bool attackEnded;
 
     float getPhaseTime(Phase phase, Context context);
     void centerDisplayText();
