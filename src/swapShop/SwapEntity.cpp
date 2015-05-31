@@ -19,6 +19,32 @@ unsigned int SwapEntity::getHP()
     return hp;
 }
 
+bool SwapEntity::damageHP(unsigned int amount)
+{
+    if(amount >= hp)
+    {
+        hp = 0;
+        return true;
+    }
+    else
+    {
+        hp -= amount;
+        return false;
+    }
+}
+
+void SwapEntity::healHP(unsigned int amount)
+{
+    if(amount + hp > maxHP)
+    {
+        hp = maxHP;
+    }
+    else
+    {
+        hp += amount;
+    }
+}
+
 void SwapEntity::setMaxHP(unsigned int maxHP)
 {
     this->maxHP = maxHP;

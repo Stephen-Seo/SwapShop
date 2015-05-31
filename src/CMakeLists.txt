@@ -22,6 +22,7 @@ set(Game_Project_SOURCES
     engine/ec/system.cpp
     swapShop/BattleScreen.cpp
     swapShop/GameScreen.cpp
+    swapShop/HealthBar.cpp
     swapShop/ProceduralGeneration.cpp
     swapShop/SwapContext.cpp
     swapShop/SwapEntity.cpp

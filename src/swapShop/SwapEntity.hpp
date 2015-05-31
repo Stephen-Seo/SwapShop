@@ -12,6 +12,8 @@ public:
 
     void setHP(unsigned int hp);
     unsigned int getHP();
+    bool damageHP(unsigned int amount);
+    void healHP(unsigned int amount);
     void setMaxHP(unsigned int maxHP);
     unsigned int getMaxHP();
 

@@ -4,5 +4,6 @@
 SwapContext::SwapContext() :
 player(nullptr),
 enemy(nullptr),
-battleStatus(STANDBY)
+battleStatus(STANDBY),
+playerLevel(1)
 {}

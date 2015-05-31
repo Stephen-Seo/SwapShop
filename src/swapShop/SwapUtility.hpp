@@ -5,6 +5,8 @@
 #define ENTITY_SIZE 16
 #define ENTITY_SIZE_F float(ENTITY_SIZE)
 
+#include <string>
+
 #include <SFML/System.hpp>
 
 #include <engine/sceneNode.hpp>
@@ -25,6 +27,8 @@ namespace SwapUtility
     // 2 - left
     // 3 - right
     unsigned char getDirection(const sf::Vector2f& vector);
+
+    std::string getName(const SceneNode& entity);
 }
 
 #endif

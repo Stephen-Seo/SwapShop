@@ -19,6 +19,7 @@ public:
     SceneNode* player;
     SceneNode* enemy;
     BattleStatus battleStatus;
+    int playerLevel;
 
 private:
 

@@ -9,6 +9,9 @@
 #include <swapShop/entities/BlueBricks.hpp>
 #include <swapShop/entities/GreenBricks.hpp>
 
+#include <swapShop/entities/Player.hpp>
+#include <swapShop/entities/YellowGuy.hpp>
+
 bool SwapUtility::isEntitiesColliding(const SceneNode& one, const SceneNode& two)
 {
     sf::Vector2f onePos = one.getWorldPosition();
@@ -126,5 +129,18 @@ unsigned char SwapUtility::getDirection(const sf::Vector2f& vector)
             return 0;
         }
     }
+}
+
+std::string SwapUtility::getName(const SceneNode& entity)
+{
+    if(typeid(entity) == typeid(Player))
+    {
+        return "Player";
+    }
+    else if(typeid(entity) == typeid(YellowGuy))
+    {
+        return "Yellow Guy";
+    }
+    return "Unknown";
 }
 
