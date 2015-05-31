@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#include <swapShop/SwapContext.hpp>
+
 Player::Player(const sf::Texture& texture) :
 SwapEntity(texture),
 direction(DOWN),
@@ -26,6 +28,13 @@ stationary(true)
 
 void Player::updateCurrent(sf::Time dt, Context context)
 {
+    // reset movement if just in battle
+    if(context.swapContext->battleStatus != SwapContext::STANDBY)
+    {
+        dirByte = 0;
+        stationary = true;
+    }
+
     // display management
     currentTime += dt.asSeconds();
 

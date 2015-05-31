@@ -22,10 +22,9 @@ private:
     SceneNode pickups;
     SceneNode world;
 
-    SceneNode* collidingEnemy;
-
     void generateWorld(Context context);
-    void collideLiving();
+    void checkBattleState(Context context);
+    void collideLiving(Context context);
     void collideWorld();
 
 #ifndef NDEBUG

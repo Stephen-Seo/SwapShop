@@ -9,7 +9,16 @@ class SwapContext
 public:
     SwapContext();
 
+    enum BattleStatus
+    {
+        STANDBY,
+        PLAYER_WIN,
+        ENEMY_WIN
+    };
+
     SceneNode* player;
+    SceneNode* enemy;
+    BattleStatus battleStatus;
 
 private:
 

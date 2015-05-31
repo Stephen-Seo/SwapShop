@@ -20,6 +20,7 @@ set(Game_Project_SOURCES
     engine/ec/entity.cpp
     engine/ec/nMove.cpp
     engine/ec/system.cpp
+    swapShop/BattleScreen.cpp
     swapShop/GameScreen.cpp
     swapShop/ProceduralGeneration.cpp
     swapShop/SwapContext.cpp

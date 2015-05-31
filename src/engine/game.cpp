@@ -2,6 +2,7 @@
 #include "game.hpp"
 
 #include <swapShop/GameScreen.hpp>
+#include <swapShop/BattleScreen.hpp>
 
 // set packfile name/filepath if one is being used
 #define PACKFILE_NAME ""
@@ -89,6 +90,7 @@ void Game::draw()
 void Game::registerResources()
 {
     resourceManager.registerTexture(Textures::SpriteSheet, "res/spritesheet.png");
+    resourceManager.registerTexture(Textures::InputSheet, "res/inputSheet.png");
 
     resourceManager.registerFont(Fonts::ClearSans, "res/ClearSans-Regular.ttf");
 }
@@ -98,6 +100,7 @@ void Game::registerResources()
 void Game::registerStates()
 {
     stateStack.registerState<GameScreen>(States::Game, context);
+    stateStack.registerState<BattleScreen>(States::Battle, context);
 
     stateStack.pushState(States::Game);
 }

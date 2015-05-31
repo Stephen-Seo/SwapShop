@@ -16,7 +16,8 @@ namespace Textures
 {
     enum ID
     {
-        SpriteSheet
+        SpriteSheet,
+        InputSheet
     };
 }
 

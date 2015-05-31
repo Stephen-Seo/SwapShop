@@ -48,6 +48,10 @@ void YellowGuy::updateCurrent(sf::Time dt, Context context)
             break;
         case 2:
             phaseTimer = 0.7f;
+            if(context.swapContext->player == nullptr)
+            {
+                break;
+            }
             moveDirection = context.swapContext->player->getPosition() - getPosition();
             SwapUtility::normalize(moveDirection);
             break;

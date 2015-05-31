@@ -20,8 +20,7 @@
 #endif
 
 GameScreen::GameScreen(StateStack& stack, Context context) :
-State(stack, context),
-collidingEnemy(nullptr)
+State(stack, context)
 {
     *(context.clearColor) = sf::Color(150,150,150);
 
@@ -80,6 +79,9 @@ bool GameScreen::update(sf::Time dt, Context context)
     pickups.update(dt, context);
     world.update(dt, context);
 
+    checkBattleState(context);
+
+    collideLiving(context);
     collideWorld();
 
     return false;
@@ -196,19 +198,40 @@ void GameScreen::generateWorld(Context context)
     }
 }
 
-void GameScreen::collideLiving()
+void GameScreen::checkBattleState(Context context)
 {
-    living.forEach([this] (SceneNode& current) {
+    if(context.swapContext->battleStatus != SwapContext::STANDBY)
+    {
+        if(context.swapContext->battleStatus == SwapContext::PLAYER_WIN && context.swapContext->enemy != nullptr)
+        {
+            living.detachChild(*(context.swapContext->enemy));
+            context.swapContext->enemy = nullptr;
+        }
+        else if(context.swapContext->battleStatus == SwapContext::ENEMY_WIN && context.swapContext->player != nullptr)
+        {
+            living.detachChild(*(context.swapContext->player));
+            context.swapContext->player = nullptr;
+            context.swapContext->enemy = nullptr;
+        }
+
+        context.swapContext->battleStatus = SwapContext::STANDBY;
+    }
+}
+
+void GameScreen::collideLiving(Context context)
+{
+    living.forEach([this, context] (SceneNode& current) {
         if(typeid(current) == typeid(Player))
         {
-            this->living.forEach([this, &current] (SceneNode& other) {
+            this->living.forEach([this, &current, context] (SceneNode& other) {
                 if(current == other)
                 {
                     return;
                 }
                 else if(SwapUtility::isEntitiesColliding(current, other))
                 {
-                    collidingEnemy = &other;
+                    context.swapContext->enemy = &other;
+                    requestStackPush(States::Battle);
                 }
             });
         }

@@ -7,7 +7,8 @@ namespace States
     {
         None,
         Quit,
-        Game
+        Game,
+        Battle
     };
 }
 
