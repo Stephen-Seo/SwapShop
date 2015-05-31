@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <random>
+#include <typeinfo>
 
 #include <engine/resourceManager.hpp>
 

@@ -7,6 +7,7 @@
 class SwapSprite : public sf::Drawable, public sf::Transformable
 {
 public:
+    SwapSprite();
     SwapSprite(const sf::Texture& texture);
     ~SwapSprite();
 
@@ -16,6 +17,8 @@ public:
     void displaySprite(int id);
     void flipHorizontal(bool isTrue);
     void flipVertical(bool isTrue);
+
+    void setTexture(const sf::Texture& texture);
 
     void update(sf::Time dt);
 
@@ -33,6 +36,7 @@ private:
     bool flippedVertical;
     sf::Transform flipperHorizontal;
     sf::Transform flipperVertical;
+    bool isTextureLoaded;
 
 };
 

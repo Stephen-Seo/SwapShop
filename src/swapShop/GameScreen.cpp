@@ -14,6 +14,7 @@
 #include <swapShop/SwapContext.hpp>
 
 #include <string>
+#include <typeinfo>
 
 #ifndef NDEBUG
   #include <iostream>

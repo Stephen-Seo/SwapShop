@@ -1,6 +1,20 @@
 
 #include <swapShop/SwapSprite.hpp>
 
+SwapSprite::SwapSprite() :
+sprite(),
+sizeX(1),
+sizeY(1),
+dirty(true),
+currentID(0),
+flippedHorizontal(false),
+flippedVertical(false),
+isTextureLoaded(false)
+{
+    flipperHorizontal.scale(-1.0f, 1.0f, 8.0f, 8.0f);
+    flipperVertical.scale(1.0f, -1.0f, 8.0f, 8.0f);
+}
+
 SwapSprite::SwapSprite(const sf::Texture& texture) :
 sprite(texture),
 sizeX(1),
@@ -8,7 +22,8 @@ sizeY(1),
 dirty(true),
 currentID(0),
 flippedHorizontal(false),
-flippedVertical(false)
+flippedVertical(false),
+isTextureLoaded(true)
 {
     flipperHorizontal.scale(-1.0f, 1.0f, 8.0f, 8.0f);
     flipperVertical.scale(1.0f, -1.0f, 8.0f, 8.0f);
@@ -46,8 +61,19 @@ void SwapSprite::flipVertical(bool isTrue)
     flippedVertical = isTrue;
 }
 
+void SwapSprite::setTexture(const sf::Texture& texture)
+{
+    sprite.setTexture(texture);
+    isTextureLoaded = true;
+}
+
 void SwapSprite::update(sf::Time dt)
 {
+    if(!isTextureLoaded || spriteMap.size() == 0)
+    {
+        return;
+    }
+
     if(dirty)
     {
         dirty = false;
@@ -60,6 +86,11 @@ void SwapSprite::update(sf::Time dt)
 
 void SwapSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    if(!isTextureLoaded || spriteMap.size() == 0)
+    {
+        return;
+    }
+
     if(flippedHorizontal)
     {
         states.transform *= flipperHorizontal;
@@ -69,5 +100,6 @@ void SwapSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const
         states.transform *= flipperVertical;
     }
 
+    states.transform *= getTransform();
     target.draw(sprite, states);
 }

@@ -2,7 +2,7 @@
 #ifndef HEALTH_BAR_HPP
 #define HEALTH_BAR_HPP
 
-#define DEFAULT_RED_SPEED 0.2f
+#define DEFAULT_RED_SPEED 0.14f
 
 #include <SFML/Graphics.hpp>
 

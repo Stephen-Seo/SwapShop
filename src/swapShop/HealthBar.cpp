@@ -5,7 +5,10 @@ HealthBar::HealthBar() :
 hpPercentage(1.0f),
 redSpeed(DEFAULT_RED_SPEED),
 timer(0.0f)
-{}
+{
+    red.setFillColor(sf::Color::Red);
+    green.setFillColor(sf::Color::Green);
+}
 
 HealthBar::HealthBar(float width, float height) :
 hpPercentage(1.0f),
@@ -14,6 +17,8 @@ timer(0.0f)
 {
     size.x = width;
     size.y = height;
+    red.setFillColor(sf::Color::Red);
+    green.setFillColor(sf::Color::Green);
 }
 
 HealthBar::HealthBar(const sf::Vector2f& size) :
@@ -22,6 +27,8 @@ redSpeed(DEFAULT_RED_SPEED),
 timer(0.0f)
 {
     this->size = size;
+    red.setFillColor(sf::Color::Red);
+    green.setFillColor(sf::Color::Green);
 }
 
 void HealthBar::setSize(float width, float height)
@@ -76,6 +83,8 @@ void HealthBar::update(const sf::Time& dt)
 
 void HealthBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    states.transform *= getTransform();
+
     if(red.getSize().x > 0.0f)
     {
         target.draw(red, states);
