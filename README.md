@@ -3,6 +3,8 @@
 
 Oh hey I submitted it [here](http://ludumdare.com/compo/minild-59/?action=preview&uid=37473)
 
+Made with a modified version of my Game Engine on github (that dearly needs some fixing).
+
 # Compiling
 
 ## Building with CMake
