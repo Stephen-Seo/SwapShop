@@ -1,7 +1,7 @@
 
 # Sequence Smasher
 
-Oh hey I submitted it (here)[http://ludumdare.com/compo/minild-59/?action=preview&uid=37473]
+Oh hey I submitted it [here](http://ludumdare.com/compo/minild-59/?action=preview&uid=37473)
 
 # Compiling
 
